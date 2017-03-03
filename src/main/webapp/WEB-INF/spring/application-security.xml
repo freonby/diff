@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/security 
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+
+	<http use-expressions="true">
+
+
+		<intercept-url pattern="/menu" access="hasRole('ROLE_ANONYMOUS')" />
+		<intercept-url pattern="/mainPage" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/konspekt" access="hasRole('ROLE_ANONYMOUS')" />
+		<form-login login-page="/login" default-target-url="/mainPage"
+			authentication-failure-url="/login?error=true" username-parameter="inputlogin"
+			password-parameter="inputPassword" />
+
+		<logout logout-url="/logout" logout-success-url="/login"
+			delete-cookies="JSESSIONID" />
+		<remember-me data-source-ref="dataSource"
+			remember-me-parameter="remember_me" />
+<!-- 			Session concurrency -->
+<!-- 		<session-management invalid-session-url="/login"> -->
+<!-- 			<concurrency-control max-sessions="1" -->
+<!-- 				error-if-maximum-exceeded="true" expired-url="/mainPage" /> -->
+<!-- 		</session-management> -->
+	</http>
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource" />
+			<password-encoder ref="bcrypt" />
+		</authentication-provider>
+	</authentication-manager>
+	<beans:bean id="bcrypt"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<beans:constructor-arg name="strength" value="10" />
+
+	</beans:bean>
+
+</beans:beans>
