@@ -10,25 +10,22 @@
 
 
 	<http use-expressions="true">
-
-
-		<intercept-url pattern="/menu" access="hasRole('ROLE_ANONYMOUS')" />
-		<intercept-url pattern="/mainPage" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/konspekt" access="hasRole('ROLE_ANONYMOUS')" />
-		<form-login login-page="/login" default-target-url="/mainPage"
-			authentication-failure-url="/login?error=true" username-parameter="inputlogin"
+		<intercept-url pattern="/graphPage" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/calcPage" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/userPage" access="hasRole('ROLE_USER')" />
+		<form-login login-page="/login" default-target-url="/userPage"
+			authentication-failure-url="/login?error=true" username-parameter="inputLogin"
 			password-parameter="inputPassword" />
 
 		<logout logout-url="/logout" logout-success-url="/login"
 			delete-cookies="JSESSIONID" />
 		<remember-me data-source-ref="dataSource"
 			remember-me-parameter="remember_me" />
-<!-- 			Session concurrency -->
-<!-- 		<session-management invalid-session-url="/login"> -->
-<!-- 			<concurrency-control max-sessions="1" -->
-<!-- 				error-if-maximum-exceeded="true" expired-url="/mainPage" /> -->
-<!-- 		</session-management> -->
+		<!-- Session concurrency -->
+		<!-- <session-management invalid-session-url="/login"> -->
+		<!-- <concurrency-control max-sessions="1" -->
+		<!-- error-if-maximum-exceeded="true" expired-url="/mainPage" /> -->
+		<!-- </session-management> -->
 	</http>
 	<authentication-manager>
 		<authentication-provider>

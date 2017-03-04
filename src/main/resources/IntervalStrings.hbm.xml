@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="by.tarif.web.databuffer.IntervalStrings" table="INTERVALSTRINGS">
+        <id name="id" type="long">
+            <column name="ID" />
+            <generator class="increment" />
+        </id>
+        <property name="intervalNumber" type="int">
+            <column name="INTERVALNUMBER" />
+        </property>
+        <property name="intervalName" type="java.lang.String">
+            <column name="INTERVALNAME" />
+        </property>
+        <property name="codeTimeZone" type="int">
+            <column name="CODETIMEZONE" />
+        </property>
+    </class>
+</hibernate-mapping>
