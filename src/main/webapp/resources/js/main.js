@@ -81,7 +81,6 @@ function createChart() {
 }
 
 $(document).ready(function() {
-	$("#prev").click();
 	createChart();
 
 });

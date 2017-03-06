@@ -67,7 +67,7 @@ public class EnergoSystem implements Serializable {
 
 	public float sumConsumptionValue() {
 		float sum = 0f;
-		for (Register register : list) {
+		for (Register register : this.list) {
 			sum += register.getConsumption();
 		}
 		return sum;
@@ -81,7 +81,7 @@ public class EnergoSystem implements Serializable {
 	public float sumConsuptionAbove() {
 		float sum = 0f;
 		float mid = midConsumptionValue();
-		for (Register register : list) {
+		for (Register register : this.list) {
 			if (register.getConsumption() >= mid) {
 				sum += register.getConsumption();
 			}
@@ -92,7 +92,7 @@ public class EnergoSystem implements Serializable {
 	public float sumConsuptionLess() {
 		float sum = 0f;
 		float mid = midConsumptionValue();
-		for (Register register : list) {
+		for (Register register : this.list) {
 			if (register.getConsumption() < mid) {
 				sum += register.getConsumption();
 			}

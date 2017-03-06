@@ -1,7 +1,6 @@
 package by.tarif.web.databuffer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Abonent implements Serializable {
@@ -174,28 +173,6 @@ public class Abonent implements Serializable {
 		this.holyday = holyday;
 	}
 
-	public List<Register> findRegistersBy(int YYYY, int MM, int DD) {
-		List<Register> result = new ArrayList<Register>();
-		for (YearBuffer yearBuffer : yearList) {
-			if (yearBuffer.getYYYY() == YYYY) {
-				List<MonthBuffer> monthsList = yearBuffer.getMonthsList();
-				for (MonthBuffer monthBuffer : monthsList) {
-					if (monthBuffer.getMonthNumber() == MM) {
-						List<DayBuffer> daysList = monthBuffer.getDaysList();
-						for (DayBuffer dayBuffer : daysList) {
-							if (dayBuffer.getDayNumber() == DD) {
-								return result = dayBuffer.getRegisters();
-							}
-						}
-					}
-				}
-			}
-
-		}
-		return result;
-
-	}
-
 	public int daysCount(int YYYY, int MM) {
 		int result = 0;
 		for (YearBuffer yearBuffer : yearList) {
@@ -211,14 +188,6 @@ public class Abonent implements Serializable {
 
 		}
 		return result;
-	}
-
-	public float sumConsumptionValue(List<Register> list) {
-		float sum = 0f;
-		for (Register register : list) {
-			sum += register.getConsumption();
-		}
-		return sum;
 	}
 
 	@Override

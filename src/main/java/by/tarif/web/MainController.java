@@ -55,10 +55,10 @@ public class MainController {
 		int MM = (Integer) session.getAttribute("month");
 		int YYYY = (Integer) session.getAttribute("year");
 		Result result = new Result(ab, es, tarif, YYYY, MM, DD);
-		List<Register> graphdata = result.getRelativeAbonent();
+		result.init(DD);
+		List<Register> graphdata = result.getInputAbonent();
 		int daysCount = result.getDaysCount();
 		session.setAttribute("abonent", ab);
-		System.out.println(result);
 		session.setAttribute("result", result);
 		session.setAttribute("es", es);
 		session.setAttribute("tarif", tarif);
@@ -123,27 +123,21 @@ public class MainController {
 	@RequestMapping(value = "/next", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String goNext(HttpSession session) {
-		Tarif tarif = (Tarif) session.getAttribute("tarif");
-		EnergoSystem es = (EnergoSystem) session.getAttribute("es");
-		Abonent ab = (Abonent) session.getAttribute("abonent");
-		Result result = null;
-		int YYYY = (Integer) session.getAttribute("year");
-		int MM = (Integer) session.getAttribute("month");
+
+		Result result = (Result) session.getAttribute("result");
 		int DD = (Integer) session.getAttribute("day");
 		int daysCount = (Integer) session.getAttribute("daysCount");
-		result = new Result(ab, es, tarif, YYYY, MM, DD);
 		if (DD >= daysCount) {
-			System.out.println(result);
+
 			return result.json();
 
 		}
 		DD += 1;
 		session.setAttribute("day", DD);
-		result = new Result(ab, es, tarif, YYYY, MM, DD);
-		List<Register> graphdata = result.getRelativeAbonent();
+		result.init(DD);
+		List<Register> graphdata = result.getInputAbonent();
 		session.setAttribute("graphdata", graphdata);
 		session.setAttribute("result", result);
-		System.out.println(result);
 		return result.json();
 
 	}
@@ -151,26 +145,20 @@ public class MainController {
 	@RequestMapping(value = "/prev", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String goPrev(HttpSession session) {
-		Tarif tarif = (Tarif) session.getAttribute("tarif");
-		EnergoSystem es = (EnergoSystem) session.getAttribute("es");
-		Abonent ab = (Abonent) session.getAttribute("abonent");
-		Result result = null;
-		int YYYY = (Integer) session.getAttribute("year");
-		int MM = (Integer) session.getAttribute("month");
+
+		Result result = (Result) session.getAttribute("result");
 		int DD = (Integer) session.getAttribute("day");
-		result = new Result(ab, es, tarif, YYYY, MM, DD);
 		if (DD <= 1) {
-			System.out.println(result);
+
 			return result.json();
 
 		}
 		DD -= 1;
 		session.setAttribute("day", DD);
-		result = new Result(ab, es, tarif, YYYY, MM, DD);
-		List<Register> graphdata = result.getRelativeAbonent();
+		result.init(DD);
+		List<Register> graphdata = result.getInputAbonent();
 		session.setAttribute("graphdata", graphdata);
 		session.setAttribute("result", result);
-		System.out.println(result);
 		return result.json();
 
 	}

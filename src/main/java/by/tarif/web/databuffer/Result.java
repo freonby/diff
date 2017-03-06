@@ -1,6 +1,7 @@
 package by.tarif.web.databuffer;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -36,18 +37,118 @@ public class Result {
 		this.day = DD;
 		this.month = MM;
 		this.year = YYYY;
-		this.inputAbonent = ab.findRegistersBy(year, month, day);
-		this.daysCount = ab.daysCount(year, month);
-		this.inputEnergoSystem = es.getList();
+		this.inputEnergoSystem = this.es.getList();
+		this.sumConsumptionEs = this.es.sumConsumptionValue();
+		this.inputAbonent = new ArrayList<Register>();
 		this.relativeAbonent = new ArrayList<Register>();
 		this.relativeEnergoSystem = new ArrayList<Register>();
-		this.sumConsumptionAbonent = ab.sumConsumptionValue(inputAbonent);
-		this.sumConsumptionEs = es.sumConsumptionValue();
+	}
+
+	public void init(int DD) {
+		this.day = DD;
+		findRegistersBy(year, month, day);
+		this.daysCount = abonent.daysCount(year, month);
+		sumConsumptionValue();
 		relativeValues();
 		this.delta = delta(listDelta());
 		this.alpha = alpha();
 		this.sutTarif = sutTarif();
 		this.pay = pay();
+		System.out.println(this);
+	}
+
+	public void findRegistersBy(int YYYY, int MM, int DD) {
+		List<YearBuffer> yList = abonent.getYearList();
+		for (YearBuffer yearBuffer : yList) {
+			if (yearBuffer.getYYYY() == YYYY) {
+				List<MonthBuffer> monthsList = yearBuffer.getMonthsList();
+				for (MonthBuffer monthBuffer : monthsList) {
+					if (monthBuffer.getMonthNumber() == MM) {
+						List<DayBuffer> daysList = monthBuffer.getDaysList();
+						for (DayBuffer dayBuffer : daysList) {
+							if (dayBuffer.getDayNumber() == DD) {
+								inputAbonent.clear();
+								inputAbonent.addAll(dayBuffer.getRegisters());
+								for (Register register : inputAbonent) {
+									System.out.println("Потребление Абонента:" + register.getIntervalNumber() + "-" + register.getConsumption());
+								}
+
+							}
+						}
+					}
+				}
+			}
+
+		}
+
+	}
+
+	public void sumConsumptionValue() {
+		sumConsumptionAbonent = 0f;
+		for (Register register : inputAbonent) {
+			sumConsumptionAbonent += register.getConsumption();
+		}
+	}
+
+	public void relativeValues() {
+		relativeAbonent.clear();
+		relativeEnergoSystem.clear();
+		for (Register register : inputAbonent) {
+			float c = (float) register.getConsumption();
+			float unit = (float) (c / sumConsumptionAbonent);
+			Register relative = new Register(register.getIntervalNumber(), unit, 1, 0, new Date());
+			relativeAbonent.add(relative);
+		}
+		for (Register register : inputEnergoSystem) {
+			float c = (float) register.getConsumption();
+			float unit = (float) (c / sumConsumptionEs);
+			Register relative = new Register(register.getIntervalNumber(), unit, 1, 0, new Date());
+			relativeEnergoSystem.add(relative);
+		}
+
+	}
+
+	public List<Float> listDelta() {
+		List<Float> deltaList = new ArrayList<Float>();
+
+		for (int i = 0; i < 48; i++) {
+			float unitEs = (float) relativeEnergoSystem.get(i).getConsumption();
+			float unitAb = (float) relativeAbonent.get(i).getConsumption();
+			if (unitEs >= tarif.getpMid()) {
+				float delta = unitEs - unitAb;
+				deltaList.add(new Float(delta));
+			}
+			float delta = unitAb - unitEs;
+			deltaList.add(new Float(delta));
+		}
+		return deltaList;
+
+	}
+
+	public float delta(List<Float> deltaValues) {
+		float delta = 0f;
+		for (Float d : deltaValues) {
+			delta += d;
+		}
+		return delta;
+	}
+
+	public float alpha() {
+		float kVal = es.kValue();
+		float alpha = delta - kVal;
+		return alpha;
+	}
+
+	public float sutTarif() {
+		float tMin = tarif.gettMin();
+		float tMax = tarif.gettMax();
+		float tE = tMin + (tMax - tMin) * (1 - alpha) / 2;
+		return tE;
+	}
+
+	public float pay() {
+		float pay = sutTarif * sumConsumptionAbonent / 2;
+		return pay;
 	}
 
 	public Abonent getAbonent() {
@@ -186,66 +287,6 @@ public class Result {
 		this.pay = pay;
 	}
 
-	public void relativeValues() {
-
-		for (Register register : inputAbonent) {
-			float c = (float) register.getConsumption();
-			float unit = (float) (c / sumConsumptionAbonent);
-			register.setConsumption(unit);
-			relativeAbonent.add(register);
-		}
-		for (Register register : inputEnergoSystem) {
-			float c = (float) register.getConsumption();
-			float unit = (float) (c / sumConsumptionEs);
-			register.setConsumption(unit);
-			relativeEnergoSystem.add(register);
-		}
-
-	}
-
-	public List<Float> listDelta() {
-		List<Float> deltaList = new ArrayList<Float>();
-
-		for (int i = 0; i < 48; i++) {
-			float unitEs = (float) relativeEnergoSystem.get(i).getConsumption();
-			float unitAb = (float) relativeAbonent.get(i).getConsumption();
-			if (unitEs >= tarif.getpMid()) {
-				float delta = unitEs - unitAb;
-				deltaList.add(new Float(delta));
-			}
-			float delta = unitAb - unitEs;
-			deltaList.add(new Float(delta));
-		}
-		return deltaList;
-
-	}
-
-	public float delta(List<Float> deltaValues) {
-		float delta = 0f;
-		for (Float d : deltaValues) {
-			delta += d;
-		}
-		return delta;
-	}
-
-	public float alpha() {
-		float kVal = es.kValue();
-		float alpha = delta - kVal;
-		return alpha;
-	}
-
-	public float sutTarif() {
-		float tMin = tarif.gettMin();
-		float tMax = tarif.gettMax();
-		float tE = tMin + (tMax - tMin) * (1 - alpha) / 2;
-		return tE;
-	}
-
-	public float pay() {
-		float pay = sutTarif * sumConsumptionAbonent / 2;
-		return pay;
-	}
-
 	public String json() {
 		ArrayList<Object> list = new ArrayList<Object>();
 		list.add(abonent.getCompanyName());
@@ -254,6 +295,20 @@ public class Result {
 		list.add(sutTarif);
 		list.add(alpha);
 		list.add(pay);
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		return json;
+
+	}
+
+	public String jsonNone() {
+		ArrayList<Object> list = new ArrayList<Object>();
+		list.add("-");
+		list.add("-");
+		list.add("-");
+		list.add("-");
+		list.add("-");
+		list.add("-");
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 		return json;
@@ -284,6 +339,7 @@ public class Result {
 		builder.append(", pay=");
 		builder.append(pay);
 		builder.append("]");
+
 		return builder.toString();
 	}
 
