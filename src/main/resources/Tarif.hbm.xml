@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="by.tarif.web.databuffer.Tarif" table="TARIF">
+        <id name="tarif_id" type="long">
+            <column name="TARIF_ID" />
+            <generator class="increment" />
+        </id>
+        <property name="tMin" type="float" access="field">
+            <column name="TMIN" />
+        </property>
+        <property name="tMax" type="float" access="field">
+            <column name="TMAX" />
+        </property>
+        <property name="pMid" type="float" access="field">
+            <column name="PMID" />
+        </property>
+    </class>
+</hibernate-mapping>

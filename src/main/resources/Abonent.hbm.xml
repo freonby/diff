@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="by.tarif.web.databuffer.Abonent" table="ABONENT">
+        <id name="abonent_id" type="long">
+            <column name="ABONENT_ID" />
+            <generator class="increment" />
+        </id>
+        <property name="userLogin" type="java.lang.String">
+            <column name="USERLOGIN" />
+        </property>
+        <property name="companyName" type="java.lang.String">
+            <column name="COMPANYNAME" />
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="ADDRESS" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="EMAIL" />
+        </property>
+        <property name="phone" type="java.lang.String">
+            <column name="PHONE" />
+        </property>
+        <property name="unp" type="java.lang.String">
+            <column name="UNP" />
+        </property>
+        <property name="okpo" type="java.lang.String">
+            <column name="OKPO" />
+        </property>
+        <property name="bankName" type="java.lang.String">
+            <column name="BANKNAME" />
+        </property>
+        <property name="bankAdress" type="java.lang.String">
+            <column name="BANKADRESS" />
+        </property>
+        <property name="bankCode" type="java.lang.String">
+            <column name="BANKCODE" />
+        </property>
+        <property name="bankAccount" type="java.lang.String">
+            <column name="BANKACCOUNT" />
+        </property>
+        <property name="contactPerson" type="java.lang.String">
+            <column name="CONTACTPERSON" />
+        </property>
+        <property name="comment" type="java.lang.String">
+            <column name="COMMENT" />
+        </property>
+        <property name="workday" type="boolean">
+            <column name="WORKDAY" />
+        </property>
+        <property name="holyday" type="boolean">
+            <column name="HOLYDAY" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="ACTIVE" />
+        </property>
+        <property name="yearList" type="java.util.ArrayList">
+            <column name="REGISTERS" length="1000000"/>
+        </property>
+    </class>
+</hibernate-mapping>

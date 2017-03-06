@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.tarif.web.dao.DAO;
+import by.tarif.web.databuffer.Abonent;
+import by.tarif.web.databuffer.EnergoSystem;
 import by.tarif.web.databuffer.IntervalStrings;
 import by.tarif.web.databuffer.Register;
+import by.tarif.web.databuffer.Result;
+import by.tarif.web.databuffer.Tarif;
 import by.tarif.web.databuffer.TimeZone;
-import by.tarif.web.utility.InitRegisters;
 import by.tarif.web.utility.JSONParser;
 
 @Controller
@@ -30,6 +33,9 @@ public class MainController {
 		List<TimeZone> timeZone = hibdao.getZone();
 		List<IntervalStrings> stringsList = hibdao.getIntervals();
 		session.setAttribute("energyType", 1);
+		session.setAttribute("day", 1);
+		session.setAttribute("month", 1);
+		session.setAttribute("year", 2017);
 		session.setAttribute("timeZone", timeZone);
 		session.setAttribute("stringsList", stringsList);
 		session.setAttribute("intervalType", 30);
@@ -42,8 +48,27 @@ public class MainController {
 
 	@RequestMapping(value = "/userPage", method = RequestMethod.GET)
 	public ModelAndView userPage(HttpSession session) {
-		List<Register> graphdata = InitRegisters.init48();
+		EnergoSystem es = hibdao.getEnergoSystem(1, true, false);
+		Abonent ab = hibdao.getAbonent("user");
+		Tarif tarif = hibdao.getTarif(1);
+		int DD = (Integer) session.getAttribute("day");
+		int MM = (Integer) session.getAttribute("month");
+		int YYYY = (Integer) session.getAttribute("year");
+		Result result = new Result(ab, es, tarif, YYYY, MM, DD);
+		List<Register> graphdata = result.getRelativeAbonent();
+		int daysCount = result.getDaysCount();
+		session.setAttribute("abonent", ab);
+		System.out.println(result);
+		session.setAttribute("result", result);
+		session.setAttribute("es", es);
+		session.setAttribute("tarif", tarif);
+		session.setAttribute("daysCount", daysCount);
 		session.setAttribute("graphdata", graphdata);
+
+		// EnergoSystem es = Util.init();
+		// hibdao.addEnergoSystem(es);
+		// Abonent ab = Util.initAbonentCsv(2017, 1, "user");
+		// hibdao.addAbonent(ab);
 		ModelAndView model = new ModelAndView();
 		model.setViewName("userPage");
 		model.addObject("bodyClass", "cm-no-transition cm-1-navbar");
@@ -93,6 +118,61 @@ public class MainController {
 		}
 
 		return "";
+	}
+
+	@RequestMapping(value = "/next", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String goNext(HttpSession session) {
+		Tarif tarif = (Tarif) session.getAttribute("tarif");
+		EnergoSystem es = (EnergoSystem) session.getAttribute("es");
+		Abonent ab = (Abonent) session.getAttribute("abonent");
+		Result result = null;
+		int YYYY = (Integer) session.getAttribute("year");
+		int MM = (Integer) session.getAttribute("month");
+		int DD = (Integer) session.getAttribute("day");
+		int daysCount = (Integer) session.getAttribute("daysCount");
+		result = new Result(ab, es, tarif, YYYY, MM, DD);
+		if (DD >= daysCount) {
+			System.out.println(result);
+			return result.json();
+
+		}
+		DD += 1;
+		session.setAttribute("day", DD);
+		result = new Result(ab, es, tarif, YYYY, MM, DD);
+		List<Register> graphdata = result.getRelativeAbonent();
+		session.setAttribute("graphdata", graphdata);
+		session.setAttribute("result", result);
+		System.out.println(result);
+		return result.json();
+
+	}
+
+	@RequestMapping(value = "/prev", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String goPrev(HttpSession session) {
+		Tarif tarif = (Tarif) session.getAttribute("tarif");
+		EnergoSystem es = (EnergoSystem) session.getAttribute("es");
+		Abonent ab = (Abonent) session.getAttribute("abonent");
+		Result result = null;
+		int YYYY = (Integer) session.getAttribute("year");
+		int MM = (Integer) session.getAttribute("month");
+		int DD = (Integer) session.getAttribute("day");
+		result = new Result(ab, es, tarif, YYYY, MM, DD);
+		if (DD <= 1) {
+			System.out.println(result);
+			return result.json();
+
+		}
+		DD -= 1;
+		session.setAttribute("day", DD);
+		result = new Result(ab, es, tarif, YYYY, MM, DD);
+		List<Register> graphdata = result.getRelativeAbonent();
+		session.setAttribute("graphdata", graphdata);
+		session.setAttribute("result", result);
+		System.out.println(result);
+		return result.json();
+
 	}
 
 }

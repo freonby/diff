@@ -2,7 +2,7 @@ var night = "#2F2F4C";
 var maximum = "#C7504F";
 var day = "#C0B48B";
 var chartType = "column";
-var chartText = "Активная энергия, прием (A+)";
+var chartText = "Мощность по интервалам за сутки";
 function createChart() {
 
 	$("#chart").kendoChart({
@@ -48,7 +48,7 @@ function createChart() {
 				visible : true
 			},
 			labels : {
-				format : "{0} кВт"
+				format : "{0}"
 			},
 			visible : true
 		},
@@ -79,8 +79,9 @@ function createChart() {
 		}
 	});
 }
+
 $(document).ready(function() {
-	
+	$("#prev").click();
 	createChart();
 
 });
@@ -151,70 +152,48 @@ $(function() {
 		}
 	});
 });
-$(function() {
-	$("#select-energy").kendoMobileButtonGroup({
-		select : function(e) {
-			var index = this.current().index();
-			switch (index) {
-			case 0:
-				sendParamEnergy(1);
-				chartText = "Активная энергия, прием (A+)";
-				createChart();
 
-				break;
-			case 1:
-				sendParamEnergy(2);
-				chartText = "Активная энергия, отдача (A-)";
-				createChart();
 
-				break;
-			case 2:
-				sendParamEnergy(3);
-				chartText = "Реактивная энергия, прием (R+)";
-				createChart();
+$(document).ready(function() {
 
-				break;
-			case 3:
-				sendParamEnergy(4);
-				chartText = "Реактивная энергия, отдача (R-)";
-				createChart();
+	$("#prev").click(function() {
 
-				break;
+		$.ajax({
+			url : 'prev',
+			data : ({
+				param : "prev"
+
+			}),
+			success : function(data) {
+				var json = JSON.parse(data);
+				$("#abonent").html(json[0]);
+				$("#day").html(json[1]);
+				$("#count").html(json[2]);
+				$("#tarif").html(json[3]);
+				$("#alpha").html(json[4]);
+				$("#sum").html(json[5]);
+				createChart();
 			}
-		}
+		});
+	});
+	$("#next").click(function() {
+
+		$.ajax({
+			url : 'next',
+			data : ({
+				param : "next"
+
+			}),
+			success : function(data) {
+				var json = JSON.parse(data);
+				$("#abonent").html(json[0]);
+				$("#day").html(json[1]);
+				$("#count").html(json[2]);
+				$("#tarif").html(json[3]);
+				$("#alpha").html(json[4]);
+				$("#sum").html(json[5]);
+				createChart();
+			}
+		});
 	});
 });
-$(function() {
-	$("#select-interval").kendoMobileButtonGroup({
-		select : function(e) {
-			var index = this.current().index();
-			switch (index) {
-			case 0:
-				sendParamEnergy(30);
-				createChart();
-				// kendoConsole.log("Интервал: 30 мин");
-				break;
-			case 1:
-				sendParamEnergy(60);
-				createChart();
-
-				break;
-
-			}
-		}
-	});
-});
-
-function sendParamEnergy(typeEnergy) {
-	$.ajax({
-		url : 'dispatch',
-		data : ({
-			paramEnergy : typeEnergy
-
-		}),
-		success : function(data) {
-
-		}
-	});
-
-}

@@ -8,10 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 public class Register implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4344095814945261159L;
+
+	private static final long serialVersionUID = 1L;
 	private long register_id;
 	private long energyMeter_id;
 	private long fider_id;

@@ -9,7 +9,8 @@
 		<property name="show_sql">true</property>
 		<mapping resource="IntervalStrings.hbm.xml" />
 		<mapping resource="TimeZone.hbm.xml" />
-		
-
+		<mapping resource="EnergoSystem.hbm.xml" />	
+		<mapping resource="Abonent.hbm.xml" />	
+		<mapping resource="Tarif.hbm.xml" />		
 	</session-factory>
 </hibernate-configuration>

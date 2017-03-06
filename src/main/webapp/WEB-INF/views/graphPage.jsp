@@ -25,9 +25,13 @@
 			</div>
 			<div class="col-sm-4">
 				<div class="panel panel-info">
-					<div class="panel-heading">Эффективность 3</div>
+					<div class="panel-heading">Данные расчета</div>
 					<div class="panel-body">
-						<div id="d1-c3" style="height: 150px"></div>
+						 <p>Потребитель: <strong><i id="abonent"></i></strong></p>
+                         <p>Сутки месяца: <strong><i id="day"></i>/<i id="count"></i></strong></p>
+                         <p>Ежесуточный тариф: <strong><i id="tarif"></i> BYN</strong></p>
+                         <p>Коэффициент &alpha;: <strong><i id="alpha"></i></strong></p>
+                         <p>Оплата по тарифу: <strong><i id="sum"></i> BYN</strong></p>
 					</div>
 				</div>
 			</div>
