@@ -15,8 +15,12 @@ uri="http://www.springframework.org/security/tags"%>
 		<link rel="stylesheet" type="text/css" href="resources/css/small-n-flat.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/c3.min.css">
-		<link rel="stylesheet" href="resources/css/kendo.common-material.min.css" />
-		<link rel="stylesheet" href="resources/css/kendo.metro.min.css" />
-		<link rel="stylesheet" href="resources/css/kendo.metro.mobile.min.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/style.css">
+<!-- 		<link rel="stylesheet" href="resources/css/kendo.common-material.min.css" /> -->
+<!-- 		<link rel="stylesheet" href="resources/css/kendo.metro.min.css" /> -->
+<!-- 		<link rel="stylesheet" href="resources/css/kendo.metro.mobile.min.css" /> -->
+		<link rel="stylesheet" href="resources/css/kendo.common.min.css" />
+		<link rel="stylesheet" href="resources/css/kendo.blueopal.min.css" />
+		<link rel="stylesheet" href="resources/css/kendo.blueopal.mobile.min.css" />
 
 	</head>

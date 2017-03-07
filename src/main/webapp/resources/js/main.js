@@ -1,8 +1,8 @@
 var night = "#2F2F4C";
 var maximum = "#C7504F";
 var day = "#C0B48B";
-var chartType = "column";
-var chartText = "Мощность по интервалам за сутки";
+var chartType = "line";
+var chartText = "Мощность по интервалам за сутки в относительных единицаx";
 function createChart() {
 
 	$("#chart").kendoChart({
@@ -17,11 +17,12 @@ function createChart() {
 			},
 		},
 		title : {
-			align : "left",
+			align : "center",
 			text : chartText
 		},
 		legend : {
-			visible : false
+			visible : true,
+			position:"top"
 		},
 		seriesDefaults : {
 			type : chartType,
@@ -33,8 +34,15 @@ function createChart() {
 		series : [ {
 			type : chartType,
 			pannable : true,
-			field : "value",
-			colorField : "color"
+			field : "abValue",
+			name: "потребитель",
+			
+		},{
+			type : chartType,
+			pannable : true,
+			field : "esValue",
+			name: "энергосистема",
+			
 		} ],
 		valueAxis : {
 
@@ -81,96 +89,54 @@ function createChart() {
 }
 
 $(document).ready(function() {
-	createChart();
+	initWidgets();
 
 });
+function initWidgets(){
+	$.ajax({
+		url : 'nav',
+		data : ({
+			direction : "begin"
 
-$(document).bind("kendo:skinChange", createChart);
+		}),
+		success : function(data) {
+			addToPanel(data);
+			createChart();
+		}
+	});
+}
 $(window).on("resize", function() {
 	kendo.resize($(".chart-wrapper"));
 });
 
-function gystType() {
 
-	chartType = "column";
-	$("#gystChart").removeClass();
-	$("#gystChart").addClass("k-button k-primary");
-	$("#lineChart").removeClass();
-	$("#lineChart").addClass("k-button");
-	$("#areaChart").removeClass();
-	$("#areaChart").addClass("k-button");
-	createChart();
-
-};
-
-function lineType() {
-
-	chartType = "line";
-	$("#gystChart").removeClass();
-	$("#gystChart").addClass("k-button");
-	$("#lineChart").removeClass();
-	$("#lineChart").addClass("k-button k-primary");
-	$("#areaChart").removeClass();
-	$("#areaChart").addClass("k-button");
-	createChart();
-
-};
-
-function areaType() {
-
-	chartType = "area";
-	$("#gystChart").removeClass();
-	$("#gystChart").addClass("k-button");
-	$("#lineChart").removeClass();
-	$("#lineChart").addClass("k-button");
-	$("#areaChart").removeClass();
-	$("#areaChart").addClass("k-button k-primary");
-	createChart();
-
-};
-
-
-$(function() {
-	$("#select-chart").kendoMobileButtonGroup({
-		select : function(e) {
-			var index = this.current().index();
-			switch (index) {
-			case 0:
-
-				lineType();
-				break;
-			case 1:
-
-				gystType();
-				break;
-			case 2:
-
-				areaType();
-				break;
-			}
-		}
-	});
-});
 
 
 $(document).ready(function() {
-
+	$("#slider").kendoSlider({
+		showButtons:false,
+		tickPlacement:"bottomRight",
+        min: 0,
+        max: 20,
+        smallStep: 1,
+        largeStep: 5,
+        change: function() {
+            var value = this.value();
+            sendSliderValue(value);
+            createChart();
+        }
+    });
+	
 	$("#prev").click(function() {
 
 		$.ajax({
-			url : 'prev',
+			url : 'nav',
 			data : ({
-				param : "prev"
+				direction : "prev"
 
 			}),
 			success : function(data) {
-				var json = JSON.parse(data);
-				$("#abonent").html(json[0]);
-				$("#day").html(json[1]);
-				$("#count").html(json[2]);
-				$("#tarif").html(json[3]);
-				$("#alpha").html(json[4]);
-				$("#sum").html(json[5]);
+				addToPanel(data);
 				createChart();
 			}
 		});
@@ -178,21 +144,77 @@ $(document).ready(function() {
 	$("#next").click(function() {
 
 		$.ajax({
-			url : 'next',
+			url : 'nav',
 			data : ({
-				param : "next"
+				direction : "next"
 
 			}),
 			success : function(data) {
-				var json = JSON.parse(data);
-				$("#abonent").html(json[0]);
-				$("#day").html(json[1]);
-				$("#count").html(json[2]);
-				$("#tarif").html(json[3]);
-				$("#alpha").html(json[4]);
-				$("#sum").html(json[5]);
+				addToPanel(data);
 				createChart();
 			}
 		});
 	});
+	$("#begin").click(function() {
+
+		$.ajax({
+			url : 'nav',
+			data : ({
+				direction : "begin"
+
+			}),
+			success : function(data) {
+				addToPanel(data);
+				createChart();
+			}
+		});
+	});
+	$("#end").click(function() {
+
+		$.ajax({
+			url : 'nav',
+			data : ({
+				direction : "end"
+
+			}),
+			success : function(data) {
+				addToPanel(data);
+				createChart();
+			}
+		});
+	});
+	$("#line").click(function() {
+		chartType = "line";
+		createChart();
+	});
+	$("#gyst").click(function() {
+		chartType = "column";
+		createChart();
+	});
+	
 });
+function addToPanel(data){
+	var json = JSON.parse(data);
+	$("#abonent").html(json[0]);
+	$("#day").html(json[1]);
+	$("#count").html(json[2]);
+	$("#tarif").html(json[3]);
+	$("#alpha").html(json[4]);
+	$("#sum").html(json[5]);
+	$("#consum").html(json[6]);
+	$("#tarifmin").html(json[7]);
+	$("#tarifmax").html(json[8]);
+}
+function sendSliderValue(sliderValue){
+	$.ajax({
+		url : 'slider',
+		data : ({
+			value : sliderValue
+
+		}),
+		success : function(data) {
+			
+			
+		}
+	});
+}

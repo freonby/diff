@@ -10,6 +10,7 @@
 
 
 	<http use-expressions="true">
+		
 		<intercept-url pattern="/graphPage" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/calcPage" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/userPage" access="hasRole('ROLE_USER')" />

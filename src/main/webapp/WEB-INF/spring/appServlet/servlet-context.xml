@@ -31,7 +31,7 @@
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</beans:bean>
 	
-	<context:component-scan base-package="by.tarif.web" />
+	<context:component-scan base-package="by.dunaenergo.tarif" />
 	
 	
 	

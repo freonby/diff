@@ -3,36 +3,73 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-<title>graphPage</title>
+<title>График нагрузки</title>
 <div id="global">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-4">
-				<div class="panel panel-info">
-					<div class="panel-heading">Эффективность 1</div>
-					<div class="panel-body">
-						<div id="d1-c1" style="height: 150px"></div>
-					</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">Информация об объекте</div>
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>Потребитель</td>
+								<td><strong><i id="abonent"></i></strong></td>
+							</tr>
+							<tr>
+								<td>Дата</td>
+								<td>06.03.2017</td>
+							</tr>
+							<tr>
+								<td>Мощность за сутки</td>
+								<td><strong><i id="consum"></i></strong> кВт</td>
+							</tr>
+							<tr>
+								<td>Минимальный тариф</td>
+								<td><strong><i id="tarifmin"></i></strong> BYN/кВт</td>
+							</tr>
+							<tr>
+								<td>Максимальный тариф</td>
+								<td><strong><i id="tarifmax"></i></strong> BYN/кВт</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<div class="panel panel-info">
-					<div class="panel-heading">Эффективность 2</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">Регулирование нагрузки</div>
 					<div class="panel-body">
-						<div id="d1-c2" style="height: 150px"></div>
+						<div class="chart-wrapper">
+							<input id="slider" class="balSlider" value="0" />
+						</div>
 					</div>
+
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<div class="panel panel-info">
+				<div class="panel panel-default">
 					<div class="panel-heading">Данные расчета</div>
-					<div class="panel-body">
-						 <p>Потребитель: <strong><i id="abonent"></i></strong></p>
-                         <p>Сутки месяца: <strong><i id="day"></i>/<i id="count"></i></strong></p>
-                         <p>Ежесуточный тариф: <strong><i id="tarif"></i> BYN</strong></p>
-                         <p>Коэффициент &alpha;: <strong><i id="alpha"></i></strong></p>
-                         <p>Оплата по тарифу: <strong><i id="sum"></i> BYN</strong></p>
-					</div>
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>Сутки</td>
+								<td><strong><i id="day"></i>/<i id="count"></i></strong></td>
+							</tr>
+							<tr class="success">
+								<td>Ежесуточный тариф</td>
+								<td><strong><i id="tarif"></i></strong> BYN/кВт</td>
+							</tr>
+							<tr>
+								<td>Коэффициент &alpha;</td>
+								<td><strong><i id="alpha"></i></strong></td>
+							</tr>
+							<tr class="info">
+								<td>Оплата по тарифу</td>
+								<td><strong><i id="sum"></i></strong> BYN</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -44,6 +81,6 @@
 				</div>
 			</div>
 		</div>
-		
+
 
 	</div>

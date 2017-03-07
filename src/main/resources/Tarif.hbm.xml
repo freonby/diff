@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="by.tarif.web.databuffer.Tarif" table="TARIF">
+    <class name="by.dunaenergo.tarif.databuffer.Tarif" table="TARIF">
         <id name="tarif_id" type="long">
             <column name="TARIF_ID" />
             <generator class="increment" />
