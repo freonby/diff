@@ -119,9 +119,9 @@ $(document).ready(function() {
 		showButtons:false,
 		tickPlacement:"bottomRight",
         min: 0,
-        max: 20,
+        max: 10,
         smallStep: 1,
-        largeStep: 5,
+        largeStep: 1,
         change: function() {
             var value = this.value();
             sendSliderValue(value);

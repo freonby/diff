@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import by.dunaenergo.tarif.databuffer.IntervalStrings;
 import by.dunaenergo.tarif.databuffer.Register;
 import by.dunaenergo.tarif.databuffer.Result;
-import by.dunaenergo.tarif.databuffer.TimeZone;
 import by.dunaenergo.tarif.utility.JSONParser;
 
 @Controller
@@ -23,9 +22,8 @@ public class GraphController {
 	@ResponseBody
 	public String goJson(HttpSession session) {
 		List<IntervalStrings> stringsList = (List<IntervalStrings>) session.getAttribute("stringsList");
-		List<TimeZone> timeZone = (List<TimeZone>) session.getAttribute("timeZone");
+
 		Result result = (Result) session.getAttribute("result");
-		Integer sliderValue = (Integer) session.getAttribute("sliderValue");
 
 		if ((Boolean) session.getAttribute("relative")) {
 			List<Register> graphdata = (List<Register>) session.getAttribute("graphdata");
@@ -48,10 +46,10 @@ public class GraphController {
 		Integer val = Integer.valueOf(value);
 		session.setAttribute("sliderValue", val);
 		Result result = (Result) session.getAttribute("result");
-		List<Register> graphdata = result.getRelativeAbonent();
-		session.setAttribute("graphdata", graphdata);
 		result.setRegulValue(val);
 		result.calcRegulValues();
+		List<Register> graphdata = result.getRelativeRegulationAbonent();
+		session.setAttribute("graphdata", graphdata);
 		return result.json();
 	}
 
@@ -59,6 +57,7 @@ public class GraphController {
 	@ResponseBody
 	public String balanceGraph(HttpSession session) {
 		Result result = (Result) session.getAttribute("result");
+		result.alignGraph();
 		List<Register> graphdata = result.getRelativeRegulationAbonent();
 		session.setAttribute("graphdata", graphdata);
 		result.calcAlignValues();

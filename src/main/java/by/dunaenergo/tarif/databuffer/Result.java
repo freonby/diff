@@ -73,7 +73,23 @@ public class Result {
 	}
 
 	public void calcRegulValues() {
-		this.delta = delta(listDelta());
+		regulationAbonent.clear();
+		relativeRegulationAbonent.clear();
+		Regulator regulator = new Regulator(inputAbonent, regulValue);
+		regulator.runAlgoritm();
+		regulationAbonent.addAll(regulator.getResultRegulatedAbonent());
+
+		float sum = 0f;
+		for (Register register : regulationAbonent) {
+			sum += register.getConsumption();
+		}
+		for (Register register : regulationAbonent) {
+			float c = (float) register.getConsumption();
+			float unit = (float) (c / sum);
+			Register relative = new Register(register.getIntervalNumber(), unit, 1, 0, new Date());
+			relativeRegulationAbonent.add(relative);
+		}
+		this.delta = delta(listDelta(relativeRegulationAbonent));
 		this.alpha = alpha();
 		this.sutTarif = sutTarif();
 		this.pay = pay();
