@@ -22,5 +22,7 @@ uri="http://www.springframework.org/security/tags"%>
 		<link rel="stylesheet" href="resources/css/kendo.common.min.css" />
 		<link rel="stylesheet" href="resources/css/kendo.blueopal.min.css" />
 		<link rel="stylesheet" href="resources/css/kendo.blueopal.mobile.min.css" />
+		
+
 
 	</head>

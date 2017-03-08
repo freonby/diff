@@ -13,11 +13,14 @@ public class Result {
 	private List<Register> inputAbonent;
 	private List<Register> inputEnergoSystem;
 	private List<Register> relativeAbonent;
+	private List<Register> regulationAbonent;
+	private List<Register> relativeRegulationAbonent;
 	private List<Register> relativeEnergoSystem;
 	private int day;
 	private int month;
 	private int year;
 	private int daysCount;
+	private int regulValue;
 	private float sumConsumptionAbonent;
 	private float sumConsumptionEs;
 	private float delta;
@@ -29,7 +32,7 @@ public class Result {
 		super();
 	}
 
-	public Result(Abonent ab, EnergoSystem es, Tarif tarif, int YYYY, int MM, int DD) {
+	public Result(Abonent ab, EnergoSystem es, Tarif tarif, int YYYY, int MM, int DD, int regulationValue) {
 		super();
 		this.abonent = ab;
 		this.es = es;
@@ -37,9 +40,12 @@ public class Result {
 		this.day = DD;
 		this.month = MM;
 		this.year = YYYY;
+		this.regulValue = regulationValue;
 		this.daysCount = abonent.daysCount(year, month);
 		this.inputAbonent = new ArrayList<Register>();
 		this.relativeAbonent = new ArrayList<Register>();
+		this.regulationAbonent = new ArrayList<Register>();
+		this.relativeRegulationAbonent = new ArrayList<Register>();
 		this.relativeEnergoSystem = new ArrayList<Register>();
 	}
 
@@ -48,10 +54,49 @@ public class Result {
 		findRegistersBy(year, month, day);
 		sumConsumptionValue();
 		relativeValues();
+		alignGraph();
+		calcValues();
+	}
+
+	public void calcValues() {
 		this.delta = delta(listDelta());
 		this.alpha = alpha();
 		this.sutTarif = sutTarif();
 		this.pay = pay();
+	}
+
+	public void calcAlignValues() {
+		this.delta = delta(listDelta(relativeRegulationAbonent));
+		this.alpha = alpha();
+		this.sutTarif = sutTarif();
+		this.pay = pay();
+	}
+
+	public void calcRegulValues() {
+		this.delta = delta(listDelta());
+		this.alpha = alpha();
+		this.sutTarif = sutTarif();
+		this.pay = pay();
+	}
+
+	public void alignGraph() {
+		regulationAbonent.clear();
+		relativeRegulationAbonent.clear();
+		List<Register> inputList = new ArrayList<Register>();
+		inputList.addAll(inputAbonent);
+		float sum = 0f;
+		int cnt = inputList.size();
+		for (Register register : inputList) {
+			sum += register.getConsumption();
+		}
+		float mid = sum / cnt;
+		for (Register register : inputList) {
+			Register result = new Register(register.getIntervalNumber(), mid, 1, 0, new Date());
+			float unit = (float) (mid / sum);
+			Register relative = new Register(register.getIntervalNumber(), unit, 1, 0, new Date());
+			relativeRegulationAbonent.add(relative);
+			regulationAbonent.add(result);
+		}
 	}
 
 	public void findRegistersBy(int YYYY, int MM, int DD) {
@@ -109,6 +154,23 @@ public class Result {
 		for (int i = 0; i < 48; i++) {
 			float unitEs = (float) relativeEnergoSystem.get(i).getConsumption();
 			float unitAb = (float) relativeAbonent.get(i).getConsumption();
+			if (unitEs >= tarif.getpMid()) {
+				float delta = unitEs - unitAb;
+				deltaList.add(new Float(delta));
+			}
+			float delta = unitAb - unitEs;
+			deltaList.add(new Float(delta));
+		}
+		return deltaList;
+
+	}
+
+	public List<Float> listDelta(List<Register> relativeRegulAbonentList) {
+		List<Float> deltaList = new ArrayList<Float>();
+
+		for (int i = 0; i < 48; i++) {
+			float unitEs = (float) relativeEnergoSystem.get(i).getConsumption();
+			float unitAb = (float) relativeRegulAbonentList.get(i).getConsumption();
 			if (unitEs >= tarif.getpMid()) {
 				float delta = unitEs - unitAb;
 				deltaList.add(new Float(delta));
@@ -194,6 +256,22 @@ public class Result {
 		this.relativeAbonent = relativeAbonent;
 	}
 
+	public List<Register> getRegulationAbonent() {
+		return regulationAbonent;
+	}
+
+	public void setRegulationAbonent(List<Register> regulationAbonent) {
+		this.regulationAbonent = regulationAbonent;
+	}
+
+	public List<Register> getRelativeRegulationAbonent() {
+		return relativeRegulationAbonent;
+	}
+
+	public void setRelativeRegulationAbonent(List<Register> relativeRegulationAbonent) {
+		this.relativeRegulationAbonent = relativeRegulationAbonent;
+	}
+
 	public List<Register> getRelativeEnergoSystem() {
 		return relativeEnergoSystem;
 	}
@@ -232,6 +310,14 @@ public class Result {
 
 	public void setDaysCount(int daysCount) {
 		this.daysCount = daysCount;
+	}
+
+	public int getRegulValue() {
+		return regulValue;
+	}
+
+	public void setRegulValue(int regulValue) {
+		this.regulValue = regulValue;
 	}
 
 	public float getSumConsumptionAbonent() {

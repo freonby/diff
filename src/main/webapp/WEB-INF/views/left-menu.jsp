@@ -11,7 +11,7 @@
                 <div id="cm-menu-items-wrapper">
                     <div id="cm-menu-scroller">
                         <ul class="cm-menu-items">
-                              <li><a href="userPage" class="btn btn-default"><i class="fa fa-list" aria-hidden="true"></i>Разделы</a></li>
+                             <li><a href="userPage" class="btn btn-default"><i class="fa fa-list" aria-hidden="true"></i>Разделы</a></li>
                             <li><a href="calcPage" class="btn btn-default"><i class="fa fa-calculator" aria-hidden="true"></i> Данные</a></li>
                             <li><a href="graphPage" class="btn btn-default"><i class="fa fa-pie-chart" aria-hidden="true"></i> График</a></li>
                             <li><a href="logout" class="btn btn-default"><i class="fa fa-sign-out" aria-hidden="true"></i> Выход</a></li>

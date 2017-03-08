@@ -16,29 +16,25 @@
 	</nav>
 	<nav class="cm-navbar cm-navbar-default cm-navbar-slideup">
 		<div class="pull-left" style="border-right: 1px solid #e5e5e5">
-			<a id="gyst" class="btn btn-default btn-light "><i
-				class="fa fa-bar-chart red" aria-hidden="true"></i></a>
+			<a id="" class="btn btn-default btn-md"></a>
 		</div>
-		<div class="pull-left" style="border-right: 1px solid #e5e5e5">
-			<a id="line" class="btn btn-default btn-light "><i
-				class="fa fa-line-chart" aria-hidden="true"></i></a>
-		</div>
+	
 
 
 		<div class="pull-right" style="border-left: 1px solid #e5e5e5">
-			<a id="begin" class="btn btn-default btn-light "><i
+			<a id="begin" class="btn btn-default btn-md"><i
 				class="fa fa-angle-double-left" aria-hidden="true"></i></a>
 		</div>
 		<div class="pull-right" style="border-left: 1px solid #e5e5e5">
-			<a id="prev" class="btn btn-default btn-light "><i
+			<a id="prev" class="btn btn-default btn-md"><i
 				class="fa fa-arrow-left" aria-hidden="true"></i></a>
 		</div>
 		<div class="pull-right" style="border-left: 1px solid #e5e5e5">
-			<a id="next" class="btn btn-default btn-light "><i
+			<a id="next" class="btn btn-default btn-md"><i
 				class="fa fa-arrow-right" aria-hidden="true"></i></a>
 		</div>
 		<div class="pull-right" style="border-left: 1px solid #e5e5e5">
-			<a id="end" class="btn btn-default btn-light "><i
+			<a id="end" class="btn btn-default btn-md"><i
 				class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 		</div>
 	</nav>

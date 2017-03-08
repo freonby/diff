@@ -26,6 +26,7 @@ function createChart() {
 		},
 		seriesDefaults : {
 			type : chartType,
+			stack: false,
 			labels : {
 				visible : false,
 				background : "transparent"
@@ -36,6 +37,7 @@ function createChart() {
 			pannable : true,
 			field : "abValue",
 			name: "потребитель",
+			
 			
 		},{
 			type : chartType,
@@ -123,12 +125,21 @@ $(document).ready(function() {
         change: function() {
             var value = this.value();
             sendSliderValue(value);
-            createChart();
         }
     });
+	$("#alignGraph").click(function() {
+		resetSlider();
+		$.ajax({
+			url : 'balanceGraph',		
+			success : function(data) {
+				addToPanel(data);
+				createChart();				
+			}
+		});
+	});
 	
 	$("#prev").click(function() {
-
+		resetSlider();
 		$.ajax({
 			url : 'nav',
 			data : ({
@@ -142,7 +153,7 @@ $(document).ready(function() {
 		});
 	});
 	$("#next").click(function() {
-
+		resetSlider();
 		$.ajax({
 			url : 'nav',
 			data : ({
@@ -156,7 +167,7 @@ $(document).ready(function() {
 		});
 	});
 	$("#begin").click(function() {
-
+		resetSlider();
 		$.ajax({
 			url : 'nav',
 			data : ({
@@ -170,7 +181,7 @@ $(document).ready(function() {
 		});
 	});
 	$("#end").click(function() {
-
+		resetSlider();
 		$.ajax({
 			url : 'nav',
 			data : ({
@@ -191,6 +202,11 @@ $(document).ready(function() {
 		chartType = "column";
 		createChart();
 	});
+	$("#area").click(function() {
+		chartType = "area";
+		createChart();
+	});
+	
 	
 });
 function addToPanel(data){
@@ -213,8 +229,24 @@ function sendSliderValue(sliderValue){
 
 		}),
 		success : function(data) {
-			
+			addToPanel(data);
+			createChart();
 			
 		}
 	});
+}
+function updatePane(){
+	$.ajax({
+		url : 'update',
+		
+		success : function(data) {
+			addToPanel(data);
+			
+		}
+	});
+}
+function resetSlider(){
+	var slider = $("#slider").data("kendoSlider");
+	slider.value(0);
+	
 }
