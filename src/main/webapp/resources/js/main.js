@@ -128,7 +128,7 @@ $(document).ready(function() {
         }
     });
 	$("#alignGraph").click(function() {
-		resetSlider();
+		//resetSlider();
 		$.ajax({
 			url : 'balanceGraph',		
 			success : function(data) {
@@ -139,7 +139,7 @@ $(document).ready(function() {
 	});
 	
 	$("#prev").click(function() {
-		resetSlider();
+		//resetSlider();
 		$.ajax({
 			url : 'nav',
 			data : ({
@@ -153,7 +153,7 @@ $(document).ready(function() {
 		});
 	});
 	$("#next").click(function() {
-		resetSlider();
+		//resetSlider();
 		$.ajax({
 			url : 'nav',
 			data : ({
@@ -167,7 +167,7 @@ $(document).ready(function() {
 		});
 	});
 	$("#begin").click(function() {
-		resetSlider();
+		//resetSlider();
 		$.ajax({
 			url : 'nav',
 			data : ({
@@ -181,7 +181,7 @@ $(document).ready(function() {
 		});
 	});
 	$("#end").click(function() {
-		resetSlider();
+		//resetSlider();
 		$.ajax({
 			url : 'nav',
 			data : ({

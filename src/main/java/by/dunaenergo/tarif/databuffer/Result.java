@@ -173,10 +173,13 @@ public class Result {
 			if (unitEs >= tarif.getpMid()) {
 				float delta = unitEs - unitAb;
 				deltaList.add(new Float(delta));
+				continue;
 			}
 			float delta = unitAb - unitEs;
 			deltaList.add(new Float(delta));
+
 		}
+
 		return deltaList;
 
 	}
@@ -209,6 +212,7 @@ public class Result {
 	public float alpha() {
 		float kVal = es.kValue();
 		float alpha = delta - kVal;
+
 		return alpha;
 	}
 

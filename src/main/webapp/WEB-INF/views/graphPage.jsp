@@ -83,6 +83,7 @@
 
 						</div>
 					</div>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<div class="col-sm-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -97,6 +98,8 @@
 
 						</div>
 					</div>
+					</sec:authorize>
+					
 
 				</div>
 			</div>

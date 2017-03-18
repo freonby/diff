@@ -28,7 +28,7 @@ public class GraphController {
 		if ((Boolean) session.getAttribute("relative")) {
 			List<Register> graphdata = (List<Register>) session.getAttribute("graphdata");
 			String json30 = JSONParser.energoSystemJson(graphdata, result.getRelativeEnergoSystem(), stringsList, "#2F2F4C", "#C7504F");
-			System.out.println("вызов gson relative");
+			// System.out.println("вызов gson relative");
 			return json30;
 		}
 		List<Register> graphdata = result.getInputAbonent();
@@ -36,7 +36,7 @@ public class GraphController {
 		// String json30 = JSONParser.to48Json(graphdata, timeZone,
 		// stringsList);
 		// session.setAttribute("graphdata", graphdata);
-		System.out.println("вызов gson normal");
+		// System.out.println("вызов gson normal");
 		return json30;
 	}
 
