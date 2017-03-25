@@ -4002,7 +4002,7 @@ tbody.collapse.in {
 .btn-group, .btn-group-vertical {
 	position: relative;
 	display: inline-block;
-	vertical-align: middle;
+	vertical-align: middle
 }
 
 .btn-group>.btn, .btn-group-vertical>.btn {
@@ -7665,12 +7665,6 @@ header .cm-navbar:last-child {
 	-webkit-transition: all 150ms;
 	-o-transition: all 150ms;
 	transition: all 150ms
-	text-align:left;
-}
-.cm-menu-items i {
-margin-right: 10px;
-
-
 }
 
 .cm-menu-items li a {
@@ -7681,7 +7675,7 @@ margin-right: 10px;
 	font-weight: bold;
 	background-color: #fff;
 	display: block;
-	padding: 0 247px 0 8px;
+	padding: 0 115px 0 50px;
 	text-decoration: none;
 	line-height: 50px;
 	border-bottom: 1px solid #e5e5e5;
@@ -7695,7 +7689,7 @@ margin-right: 10px;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	background-size: 16px 16px
+	background-size: 24px 24px
 }
 .cm-menu-items li i{
 	padding: 0 5px;
@@ -8536,7 +8530,6 @@ to {
 		-o-transform: translateX(-262px);
 		transform: translateX(-262px) translateZ(0)
 	}
-	
 	.cm-footer .pull-left {
 		-webkit-transform: translateX(262px) translateZ(0);
 		-ms-transform: translateX(262px);

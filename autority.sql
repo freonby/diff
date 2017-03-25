@@ -36,33 +36,8 @@ CREATE TABLE `authorities` (
 
 LOCK TABLES `authorities` WRITE;
 /*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
-INSERT INTO `authorities` VALUES ('duna','ROLE_USER'),('user','ROLE_USER');
+INSERT INTO `authorities` VALUES ('qadmin','ROLE_ADMIN'),('user','ROLE_USER');
 /*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `persistent_logins`
---
-
-DROP TABLE IF EXISTS `persistent_logins`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `persistent_logins` (
-  `username` varchar(64) NOT NULL,
-  `series` varchar(64) NOT NULL,
-  `token` varchar(64) NOT NULL,
-  `last_used` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`series`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `persistent_logins`
---
-
-LOCK TABLES `persistent_logins` WRITE;
-/*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
-/*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -86,7 +61,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('duna','$2a$06$eHKA/Bf3RKBOz.VLsRn5YuNKt1e7ifYaJq5Lu0ILEF1fiTqz/WDBa',1),('user','$2a$06$9/K6t2bO/i8mdpBpL9mwq.HShYaFizVTKnzxDMlAYCWc8k1yEquqC',1);
+INSERT INTO `users` VALUES ('qadmin','$2a$04$7V2yZ3WnLqLZPX29lXZpVetMCHmg5r178knvPxqHd52JRYQzHlSJm',1),('user','$2a$04$O0bFoiMbBHSvD0B8sUiDduJfQbzERpd46KuXFX0cBO/IbFoDtSjsK',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -99,4 +74,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-06 12:12:11
+-- Dump completed on 2017-03-19 15:00:35

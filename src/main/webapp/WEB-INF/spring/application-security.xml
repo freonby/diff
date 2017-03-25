@@ -11,9 +11,9 @@
 
 	<http use-expressions="true">
 		
-		<intercept-url pattern="/graphPage" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/calcPage" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/userPage" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/graphPage" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/calcPage" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/userPage" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" />
 		<form-login login-page="/login" default-target-url="/userPage"
 			authentication-failure-url="/login?error=true" username-parameter="inputLogin"
 			password-parameter="inputPassword" />
@@ -27,6 +27,7 @@
 		<!-- <concurrency-control max-sessions="1" -->
 		<!-- error-if-maximum-exceeded="true" expired-url="/mainPage" /> -->
 		<!-- </session-management> -->
+		
 	</http>
 	<authentication-manager>
 		<authentication-provider>

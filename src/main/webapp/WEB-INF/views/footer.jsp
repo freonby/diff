@@ -11,11 +11,13 @@
 <script src="resources/js/fastclick.min.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 <script src="resources/js/clearmin.min.js"></script>
-<script src="resources/js/lib/d3.min.js"></script>
-<script src="resources/js/lib/c3.min.js"></script>
-<script src="resources/js/demo/dashboard.js"></script>
 <script src="resources/js/kendo.all.min.js"></script>
 <script src="resources/js/main.js"></script>
-<script src="resources/js/console.js"></script>
+
+<script type="text/javascript">
+		setInterval(function() {
+			  pingSession();
+			}, 55000);
+		</script>
 </body>
 </html>

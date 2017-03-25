@@ -250,3 +250,15 @@ function resetSlider(){
 	slider.value(0);
 	
 }
+
+function pingSession(){
+	$.ajax({
+		url : 'closeSession',
+		data : ({
+			optionClose : "close"
+
+		}),
+
+	});
+	
+}

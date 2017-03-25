@@ -66,44 +66,48 @@
 					<div class="col-sm-12">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<button id="gyst" class="btn btn-primary btn-md" title="Гистограмма">
-									<i class="fa fa-bar-chart" aria-hidden="true" ></i>
+								<button id="gyst" class="btn btn-primary btn-md"
+									title="Гистограмма">
+									<i class="fa fa-bar-chart" aria-hidden="true"></i>
 								</button>
-								<button id="line" class="btn btn-primary btn-md" title="Линейный график">
+								<button id="line" class="btn btn-primary btn-md"
+									title="Линейный график">
 									<i class="fa fa-line-chart" aria-hidden="true"></i>
 								</button>
-								<button id="area" class="btn btn-primary btn-md" title="График по площади">
+								<button id="area" class="btn btn-primary btn-md"
+									title="График по площади">
 									<i class="fa fa-area-chart" aria-hidden="true"></i>
 								</button>
-								<button id="alignGraph" class="btn btn-primary btn-md" title="Выравнивание графика">
+								<button id="alignGraph" class="btn btn-primary btn-md"
+									title="Выравнивание графика">
 									<i class="fa fa-arrows-h" aria-hidden="true"></i>
 								</button>
-								
+
 							</div>
 
 						</div>
 					</div>
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
-					<div class="col-sm-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								Регулирование нагрузки <i class="fa fa-percent"
-									aria-hidden="true"></i>
-							</div>
-							<div class="panel-body">
-								<div class="chart-wrapper">
-									<input id="slider" class="balSlider" value="0" />
+						<div class="col-sm-12">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									Регулирование нагрузки <i class="fa fa-percent"
+										aria-hidden="true"></i>
 								</div>
-							</div>
+								<div class="panel-body">
+									<div class="chart-wrapper">
+										<input id="slider" class="balSlider" value="0" />
+									</div>
+								</div>
 
+							</div>
 						</div>
-					</div>
 					</sec:authorize>
 					
 
 				</div>
 			</div>
-			
+
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">Суточный график нагрузки</div>
@@ -113,6 +117,5 @@
 				</div>
 			</div>
 		</div>
-
 
 	</div>
